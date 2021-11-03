@@ -9,7 +9,7 @@ import KeyboardSafeView from '../components/KeyboardSafeView';
 
 export default function MemoCreateScreen() {
   return (
-    <KeyboardSafeView style={styles.container} >
+    <KeyboardSafeView style={styles.container}>
       <AppBar />
       <View style={styles.inputContainer}>
         <TextInput value="" multiline style={styles.input} />
