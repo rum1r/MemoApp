@@ -26,4 +26,3 @@ Icon.defaultProps = {
   size: 24,
   color: '#000',
 };
-
