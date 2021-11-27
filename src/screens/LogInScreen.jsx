@@ -11,7 +11,7 @@ export default function LogInScreen(props) {
   // email=保持したい値 setEmail=値を更新する関数 ''=初期値
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  // 画面が描写された後に実行される
   // props が変更されるたびに走る
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {

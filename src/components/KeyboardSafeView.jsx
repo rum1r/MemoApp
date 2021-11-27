@@ -9,6 +9,7 @@ export default function KeyboardSafeView({ children, style }) {
   const animatedViewHeight = useRef(null);
   const [viewHeight, setViewHeight] = useState(null);
 
+  // 画面が描写された後に実行される
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', handleShow);
     Keyboard.addListener('keyboardDidHide', handleHide);
@@ -18,6 +19,7 @@ export default function KeyboardSafeView({ children, style }) {
     };
   }, []);
 
+  // 画面が描写された後に実行される
   useEffect(() => {
     if ([initialViewHeight, animatedViewHeight, viewHeight].some((val) => val === null)) { return; }
     // height is not supported with useNativeDriver: true

@@ -5,7 +5,6 @@ import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
 import MemoList from '../components/MemoList';
 import LogOutButton from '../components/LogOutButton';
-import { diffClamp } from 'react-native-reanimated';
 
 export default function MemoListScreen(props) {
   const { navigation } = props;
