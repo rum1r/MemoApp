@@ -8,7 +8,7 @@ import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
-
+import { translateErrors } from '../utils';
 export default function MemoEditScreen(props) {
   const { navigation, route } = props;
   const { id, bodyText } = route.params; // route は前の画面で渡した値を取得するためのもの
@@ -26,8 +26,9 @@ export default function MemoEditScreen(props) {
         .then(() => {
           navigation.goBack();
         })
-        .catch((error) => {
-          Alert.alert(error.code);
+        .catch((error) => { // とりあえずデフォルトが表示されるようになっている
+          const errorMsg = translateErrors(error.code);
+          Alert.alert(errorMsg.title, errorMsg.description);
         });
     }
   }
