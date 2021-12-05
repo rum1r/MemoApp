@@ -11,7 +11,6 @@ import { dateToString } from '../utils';
 export default function MemoDetailScreen(props) {
   const { navigation, route } = props;
   const { id } = route.params;
-  //console.log(id);
   // useState 一時的にデータを保存する？
   const [memo, setMemo] = useState(null);
   useEffect(() => {
@@ -22,10 +21,9 @@ export default function MemoDetailScreen(props) {
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       //  onSnapshotは変更を監視してくれる
       unsubscribe = ref.onSnapshot((doc) => {
-        console.log(doc.id, doc.data());
         const data = doc.data();
         setMemo({
-          id: id,
+          id: doc.id,
           bodyText: data.bodyText,
           updatedAt: data.updatedAt.toDate(),
         });
@@ -39,10 +37,12 @@ export default function MemoDetailScreen(props) {
         <Text style={styles.memoTitle} numberOfLines={1}>{memo && memo.bodyText}</Text>
         <Text style={styles.memoDate}>{memo && dateToString(memo.updatedAt)}</Text>
       </View>
-      <ScrollView style={styles.memoBody}>
-        <Text style={styles.memoText}>
-          {memo && memo.bodyText}
-        </Text>
+      <ScrollView>
+        <View style={styles.memoBodyInner}>
+          <Text style={styles.memoText}>
+            {memo && memo.bodyText}
+          </Text>
+        </View>
       </ScrollView>
       <CircleButton
         style={{ top: 60, bottom: 'auto' }}
@@ -53,7 +53,7 @@ export default function MemoDetailScreen(props) {
 
   );
 }
-MemoDetailScreen.prototypes = {
+MemoDetailScreen.propTypes = {
   route: shape({
     params: shape({
       id: string,
@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
-  memoBody: {
-    paddingVertical: 32,
+  memoBodyInner: {
+    paddingTop: 32,
+    paddingBottom: 80,
     paddingHorizontal: 27,
   },
   memoText: {

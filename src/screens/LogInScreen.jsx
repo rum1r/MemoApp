@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity, Alert,
 } from 'react-native';
@@ -29,12 +29,13 @@ export default function LogInScreen(props) {
     });
     return unsubscribe; // ログインスクリーンがアンマウントされる瞬間監視状態がキャンセルされる。ちょっとむずかしい。
   }, []); // 第2引数の配列をいれると画面表示された瞬間だけ実行してくれる
-  function handlePress() {
+
+  const handlePress = useCallback(() => {
+    //  function handlePress() {
+    // JSX props should not use functionseslintreact/jsx-no-bind エラーが出るのでuseCallback()でくるむ
     setLoading(true);
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const { user } = userCredential;
-        console.log(user.uid);
+      .then(() => {
         navigation.reset({
           index: 0,
           routes: [{ name: 'MemoList' }],
@@ -48,7 +49,8 @@ export default function LogInScreen(props) {
       .then(() => {
         setLoading(false);
       });
-  }
+  });
+
   return (
     <View style={styles.container}>
       <Loading isLoading={isLoading} />

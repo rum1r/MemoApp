@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { shape, string } from 'prop-types';
 
 import {
@@ -9,12 +9,14 @@ import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
 import { translateErrors } from '../utils';
+
 export default function MemoEditScreen(props) {
   const { navigation, route } = props;
   const { id, bodyText } = route.params; // route は前の画面で渡した値を取得するためのもの
   const [body, setBody] = useState(bodyText);
 
-  function handlePress() {
+  const handlePress = useCallback(() => {
+    //  function handlePress() {
     const { currentUser } = firebase.auth();
     if (currentUser) {
       const db = firebase.firestore();
@@ -31,7 +33,8 @@ export default function MemoEditScreen(props) {
           Alert.alert(errorMsg.title, errorMsg.description);
         });
     }
-  }
+  });
+
   return (
     <KeyboardSafeView style={styles.container} behavior="height">
       <View style={styles.inputContainer}>
@@ -52,7 +55,7 @@ export default function MemoEditScreen(props) {
     </KeyboardSafeView>
   );
 }
-MemoEditScreen.prototypes = {
+MemoEditScreen.propTypes = {
   route: shape({
     params: shape({
       id: string,
